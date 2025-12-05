@@ -1,0 +1,89 @@
+{% extends "base.html" %}   
+{% block title %}Block_List{% endblock %}
+
+{%block content%}
+<!-- Carousel -->
+<div id="carouselExampleDark" class="carousel carousel-dark slide mt-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      {% for item in carousel %}
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{forloop.counter}}" class="{% if forloop.first %}active{% endif %}" aria-current='true' aria-label="slide{{forloop.counter}}"></button>
+    {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+      {% for item in carousel %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="10000">
+          <img src="{{ item.image }}" class="d-block w-100" alt="" style="max-height: 500px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5 style= 'color: white'>{{ item.title }}</h5>
+            <p style='color: white'>{{ item.content }}</p>
+            <hr>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button"  style= 'color: white' data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"  aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button"  style= 'color: white' data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<!-- nav
+    <ul class="nav" style="background-color: #e3f2fd">
+      <li class="nav-item">
+        <span class="nav-link nav-brand active" aria-current="page">News</span>
+      </li>
+    </ul> -->
+<!-- News card -->
+<br />
+<div class="container my-4">
+   
+    <div class="row">
+      {% for item in posts %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="{{ item.image }}" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <hr>
+              <p class="card-text">{{ item.content| truncatewords:20 }}</p>
+  
+              <!-- Like button and count -->
+             <!-- Like & Comment Section -->
+             <div class="d-flex align-items-center justify-content-between">
+              
+                <!-- Like Button -->
+                <div>
+                  <button class="btn btn-outline-danger btn-sm me-2 like-btn" data-post-id="">
+                    <i class="bi bi-heart-fill"></i> 
+                  </button>
+                  <span class="like-count">{{ item.likes }}</span> Likes
+                </div>
+  
+                <!-- Comment Count -->
+                <div>
+                  <i class="bi bi-chat-left-text text-primary"></i>
+                  <span class="comment-count">{{ item.comment_set.count }}</span> Comments
+                </div>
+
+              </div>
+  
+              <!-- Read more link -->
+              <a href="{%  url 'detail' item.pk%}" class="btn btn-primary mt-2">Read more</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+
+  
+  
+ 
+</div>
+
+{%endblock content%}
